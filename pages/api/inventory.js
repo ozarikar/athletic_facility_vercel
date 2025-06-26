@@ -2,6 +2,7 @@ import { supabase } from '../../lib/supabaseClient';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
+    console.log(supabaseUrl, supabaseAnonKey);
     const { data, error } = await supabase.from('inventory').select('*').order('item_name');
     if (error) {
       console.error('GET error:', error);
