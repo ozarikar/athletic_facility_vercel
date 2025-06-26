@@ -15,7 +15,7 @@ export default function Home() {
         <Link href="/current-inventory" passHref>
           <button style={btnStyle}>Current Inventory</button>
         </Link>
-        <Link href="/add_items" passHref>
+        <Link href="/add-items" passHref>
           <button style={btnStyle}>Add New Items</button>
         </Link>
       </nav>
