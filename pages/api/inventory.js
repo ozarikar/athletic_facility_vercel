@@ -1,8 +1,12 @@
 import { supabase } from '../../lib/supabaseClient';
 
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
+console.log('NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log('SUPABASE_ANON_KEY:', process.env.SUPABASE_ANON_KEY);
+console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
 export default async function handler(req, res) {
   if (req.method === 'GET') {
-    console.log(supabaseUrl, supabaseAnonKey);
     const { data, error } = await supabase.from('inventory').select('*').order('item_name');
     if (error) {
       console.error('GET error:', error);
