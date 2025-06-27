@@ -75,4 +75,9 @@ const styles = {
     boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
     transition: 'transform 0.2s ease',
   },
+  footer: {
+    marginTop: '40px',
+    fontSize: '0.8em',
+    color: '#888',
+  }
 };
