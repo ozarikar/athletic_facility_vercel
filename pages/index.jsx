@@ -26,6 +26,9 @@ export default function Home() {
             <button style={styles.btn}>➕ Add New Items</button>
           </Link>
         </nav>
+        <footer style={styles.footer}>
+          Built by a Centre Student, Omkar
+        </footer>
       </div>
     </>
   );

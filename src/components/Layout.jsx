@@ -18,10 +18,6 @@ export default function Layout({ children, title = 'Athletic Office Supplies' })
           </header>
           <main>{children}</main>
         </div>
-        {/* === NEW FOOTER ADDED HERE === */}
-        <footer style={styles.footer}>
-          Built by Omkar, a Centre College Student
-        </footer>
       </div>
     </>
   );
