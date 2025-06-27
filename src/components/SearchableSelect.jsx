@@ -1,45 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useCombobox } from 'downshift';
 
 export default function SearchableSelect({ items, selectedItem, onSelectedItemChange, placeholder }) {
   const [inputItems, setInputItems] = useState(items);
-
-  // When the items prop changes (e.g., after a checkout), update our internal list
-  // This is a small improvement to ensure the list stays fresh
-  useState(() => {
-    setInputItems(items);
-  }, [items]);
 
   const {
     isOpen,
     getToggleButtonProps,
     getMenuProps,
     getInputProps,
+    getLabelProps, // Added for completeness, good for accessibility
     highlightedIndex,
     getItemProps,
+    closeMenu, // Useful for resetting
   } = useCombobox({
     items: inputItems,
     selectedItem,
-    onSelectedItemChange,
     itemToString: (item) => (item ? item.item_name : ''),
+    onSelectedItemChange: (changes) => {
+      // This ensures the main form's state is updated when an item is selected
+      onSelectedItemChange(changes);
+      // Optional: Clear the search when an item is picked
+      // setInputItems(items); 
+    },
     onInputValueChange: ({ inputValue }) => {
+      // This filters the list as the user types
       setInputItems(
         items.filter((item) =>
           item.item_name.toLowerCase().includes(inputValue.toLowerCase())
         )
       );
     },
-    // === THIS IS THE FIX ===
-    // This function runs whenever Downshift's internal state changes.
-    onStateChange: ({ type, isOpen }) => {
-      // When the menu is opened (e.g., by clicking the toggle button)...
-      if (type === useCombobox.stateChangeTypes.ToggleButtonClick && isOpen) {
-        // ...reset the filtered list to show ALL items.
-        setInputItems(items);
-      }
-      // We could add more logic here for other state changes if needed.
-    }
   });
+
+  // === THIS IS THE FIX ===
+  // This effect runs whenever the dropdown's open state changes.
+  useEffect(() => {
+    // If the menu is being opened...
+    if (isOpen) {
+      // ...reset the list of items to show ALL available options.
+      setInputItems(items);
+    }
+  }, [isOpen, items]); // Dependency array ensures this runs when `isOpen` changes.
+
 
   return (
     <div style={styles.container}>
@@ -52,6 +55,7 @@ export default function SearchableSelect({ items, selectedItem, onSelectedItemCh
         <button
           aria-label="toggle menu"
           style={styles.toggleButton}
+          type="button" // Important to prevent form submission
           {...getToggleButtonProps()}
         >
           {isOpen ? '▲' : '▼'}
@@ -84,7 +88,7 @@ export default function SearchableSelect({ items, selectedItem, onSelectedItemCh
   );
 }
 
-// Styles remain the same
+// Styles are unchanged
 const styles = {
   container: { position: 'relative', width: '100%', margin: '8px 0' },
   inputContainer: { display: 'flex', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' },
