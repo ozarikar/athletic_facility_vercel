@@ -62,3 +62,6 @@ export default function MobileCheckout() {
     </Layout>
   );
 }
+
+const inputStyle = { width: '100%', margin: '8px 0', padding: 12, borderRadius: 4, border: '1px solid #ccc' };
+const btnStyle = { ...inputStyle, background: '#28a745', color: '#fff', fontWeight: 'bold', border: 'none', cursor: 'pointer' };
