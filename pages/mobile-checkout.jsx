@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Layout from '../src/components/Layout.jsx';
 import toast from 'react-hot-toast';
+import SearchableSelect from '../src/components/SearchableSelect.jsx'; // Import our new component
 
 export default function MobileCheckoutPage() {
   return (
@@ -12,32 +13,18 @@ export default function MobileCheckoutPage() {
 
 function MobileCheckout() {
   const [items, setItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [itemSearch, setItemSearch] = useState('');
-  const [form, setForm] = useState({ person: '', item: '', team: '', quantity: 1 });
+  const [selectedItem, setSelectedItem] = useState(null); // Use an object for the selected item
+  const [form, setForm] = useState({ person: '', team: '', quantity: 1 });
 
   const fetchAndSetItems = () => {
     fetch('/api/inventory?is_archived=false')
       .then(res => res.json())
       .then(data => {
-        const availableItems = data.filter(i => i.available_quantity > 0);
-        setItems(availableItems);
+        setItems(data.filter(i => i.available_quantity > 0));
       });
   };
 
   useEffect(fetchAndSetItems, []);
-
-  // This useEffect filters the dropdown as the user types
-  useEffect(() => {
-    if (!itemSearch) {
-      setFilteredItems(items);
-    } else {
-      const results = items.filter(item =>
-        item.item_name.toLowerCase().includes(itemSearch.toLowerCase())
-      );
-      setFilteredItems(results);
-    }
-  }, [itemSearch, items]);
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -45,7 +32,7 @@ function MobileCheckout() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    if (!form.item) {
+    if (!selectedItem) {
         toast.error("Please select an item from the list.");
         return;
     }
@@ -53,7 +40,7 @@ function MobileCheckout() {
     const promise = fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, quantity: Number(form.quantity) }),
+      body: JSON.stringify({ ...form, item: selectedItem.item_name, quantity: Number(form.quantity) }),
     });
 
     toast.promise(promise, {
@@ -62,9 +49,9 @@ function MobileCheckout() {
         if (!res.ok) {
           return res.json().then(err => { throw new Error(err.error || 'Checkout failed.') });
         }
-        setForm({ person: '', item: '', team: '', quantity: 1 });
-        setItemSearch(''); // Reset search bar
-        fetchAndSetItems(); // Refresh item list
+        setForm({ person: '', team: '', quantity: 1 });
+        setSelectedItem(null); // Reset the selected item
+        fetchAndSetItems();
         return '✅ Checkout successful!';
       },
       error: (err) => `❌ ${err.toString().replace('Error: ', '')}`,
@@ -78,26 +65,14 @@ function MobileCheckout() {
         <label style={styles.label}>Your Name</label>
         <input name="person" placeholder="Your Name" value={form.person} onChange={handleChange} required style={styles.input} />
         
-        <label style={styles.label}>Search for Item</label>
-        <input
-          type="text"
-          placeholder="🔍 Start typing to find an item..."
-          value={itemSearch}
-          onChange={e => setItemSearch(e.target.value)}
-          style={{ ...styles.input, marginBottom: 0 }}
+        {/* === USE OUR NEW COMPONENT HERE === */}
+        <label style={styles.label}>Item</label>
+        <SearchableSelect 
+          items={items}
+          selectedItem={selectedItem}
+          onSelectedItemChange={({ selectedItem }) => setSelectedItem(selectedItem)}
+          placeholder="Search for an item..."
         />
-        <select name="item" value={form.item} onChange={handleChange} required style={styles.input} size={filteredItems.length > 1 ? 5 : 2}>
-          {filteredItems.length > 0 ? (
-            filteredItems.map(i => (
-              <option key={i.id} value={i.item_name}>
-                {i.item_name} (Available: {i.available_quantity})
-                {i.available_quantity / i.total_quantity <= 0.2 && " - Low Stock!"}
-              </option>
-            ))
-          ) : (
-            <option value="" disabled>No items match your search.</option>
-          )}
-        </select>
         
         <label style={styles.label}>Team</label>
         <select name="team" value={form.team} onChange={handleChange} required style={styles.input}>
