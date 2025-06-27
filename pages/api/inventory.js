@@ -1,9 +1,3 @@
-console.log('== Runtime ENV ==');
-console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
-console.log('NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-console.log('SUPABASE_ANON_KEY:', !!process.env.SUPABASE_ANON_KEY);
-console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-
 import { supabase } from '../../lib/supabaseClient';
 
 export default async function handler(req, res) {
@@ -20,11 +14,16 @@ export default async function handler(req, res) {
       const { item_name, category, total_quantity, description } = req.body;
       const { data, error } = await supabase
         .from('inventory')
-        .insert([{ item_name, category, total_quantity, available_quantity: total_quantity, description }]);
+        .insert([{ item_name, category, total_quantity, available_quantity: total_quantity, description }])
+        .select(); // <--- ADD THIS .select()
+        
       if (error) {
         console.error('POST error:', error);
         return res.status(500).json({ error: error.message });
       }
+
+      // Now `data` will be an array with the new item, e.g., [{...}]
+      // so data[0] will work correctly.
       return res.status(201).json(data[0]);
     } catch (err) {
       console.error('POST exception:', err);
