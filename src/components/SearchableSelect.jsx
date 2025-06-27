@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { useCombobox } from 'downshift';
 
-// This is our new, beautiful, searchable dropdown component
 export default function SearchableSelect({ items, selectedItem, onSelectedItemChange, placeholder }) {
   const [inputItems, setInputItems] = useState(items);
+
+  // When the items prop changes (e.g., after a checkout), update our internal list
+  // This is a small improvement to ensure the list stays fresh
+  useState(() => {
+    setInputItems(items);
+  }, [items]);
 
   const {
     isOpen,
     getToggleButtonProps,
-    getLabelProps,
     getMenuProps,
     getInputProps,
     highlightedIndex,
@@ -25,6 +29,16 @@ export default function SearchableSelect({ items, selectedItem, onSelectedItemCh
         )
       );
     },
+    // === THIS IS THE FIX ===
+    // This function runs whenever Downshift's internal state changes.
+    onStateChange: ({ type, isOpen }) => {
+      // When the menu is opened (e.g., by clicking the toggle button)...
+      if (type === useCombobox.stateChangeTypes.ToggleButtonClick && isOpen) {
+        // ...reset the filtered list to show ALL items.
+        setInputItems(items);
+      }
+      // We could add more logic here for other state changes if needed.
+    }
   });
 
   return (
@@ -70,57 +84,13 @@ export default function SearchableSelect({ items, selectedItem, onSelectedItemCh
   );
 }
 
+// Styles remain the same
 const styles = {
-  container: {
-    position: 'relative',
-    width: '100%',
-    margin: '8px 0',
-  },
-  inputContainer: {
-    display: 'flex',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    overflow: 'hidden',
-    backgroundColor: '#fff',
-  },
-  input: {
-    width: '100%',
-    padding: '12px',
-    border: 'none',
-    fontSize: '1em',
-    outline: 'none',
-  },
-  toggleButton: {
-    background: 'transparent',
-    border: 'none',
-    padding: '0 15px',
-    cursor: 'pointer',
-    fontSize: '0.8em',
-  },
-  menu: {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    right: 0,
-    maxHeight: '200px',
-    overflowY: 'auto',
-    background: 'white',
-    border: '1px solid #ccc',
-    borderTop: 'none',
-    borderRadius: '0 0 8px 8px',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    margin: 0,
-    padding: 0,
-    listStyle: 'none',
-    zIndex: 1000,
-  },
-  menuItem: {
-    padding: '12px',
-    cursor: 'pointer',
-  },
-  itemDetails: {
-    fontSize: '0.9em',
-    color: '#666',
-    marginLeft: '8px',
-  },
+  container: { position: 'relative', width: '100%', margin: '8px 0' },
+  inputContainer: { display: 'flex', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden', backgroundColor: '#fff' },
+  input: { width: '100%', padding: '12px', border: 'none', fontSize: '1em', outline: 'none' },
+  toggleButton: { background: 'transparent', border: 'none', padding: '0 15px', cursor: 'pointer', fontSize: '0.8em' },
+  menu: { position: 'absolute', top: '100%', left: 0, right: 0, maxHeight: '200px', overflowY: 'auto', background: 'white', border: '1px solid #ccc', borderTop: 'none', borderRadius: '0 0 8px 8px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', margin: 0, padding: 0, listStyle: 'none', zIndex: 1000 },
+  menuItem: { padding: '12px', cursor: 'pointer' },
+  itemDetails: { fontSize: '0.9em', color: '#666', marginLeft: '8px' },
 };
