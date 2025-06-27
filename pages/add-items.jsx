@@ -22,7 +22,7 @@ export default function AddItems() {
     }
   };
   return (
-    <layout title="Add New Item">
+    <Layout title="Add New Item">
       <form onSubmit={handleSubmit}>
         <input name="item_name" placeholder="Item Name" value={form.item_name} onChange={handleChange} required style={inputStyle} />
         <input name="category" placeholder="Category" value={form.category} onChange={handleChange} required style={inputStyle} />
@@ -31,6 +31,6 @@ export default function AddItems() {
         <button type="submit" style={btnStyle}>Add Item</button>
       </form>
       {message && <div style={{ marginTop: 20 }}>{message}</div>}
-    </layout>
+    </Layout>
   );
 }
