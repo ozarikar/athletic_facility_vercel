@@ -9,7 +9,7 @@ export default function AddItemsPage() { // Rename component to be more descript
   );
 }
 
-export default function AddItems() {
+function AddItems() {
   const [form, setForm] = useState({ item_name: '', category: '', total_quantity: 1, description: '' });
   const [message, setMessage] = useState('');
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
