@@ -27,7 +27,7 @@ export default function Home() {
           </Link>
         </nav>
         <footer style={styles.footer}>
-          Built by a Centre Student, Omkar
+          Built by a Centre Student- Omkar
         </footer>
       </div>
     </>
