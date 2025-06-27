@@ -23,8 +23,8 @@ function CurrentInventory() {
             <tr>
               <th style={styles.th}>Item Name</th>
               <th style={styles.th}>Category</th>
-              <th style={styles.th}>Total</th>
               <th style={styles.th}>Available</th>
+              <th style={styles.th}>Total</th>
               <th style={styles.th}>Description</th>
             </tr>
           </thead>
@@ -33,8 +33,8 @@ function CurrentInventory() {
               <tr key={i.id} style={styles.tr}>
                 <td style={styles.td}>{i.item_name}</td>
                 <td style={styles.td}>{i.category}</td>
-                <td style={styles.td}>{i.total_quantity}</td>
                 <td style={styles.td}>{i.available_quantity}</td>
+                <td style={styles.td}>{i.total_quantity}</td>
                 <td style={styles.td}>{i.description}</td>
               </tr>
             ))}
