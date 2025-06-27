@@ -1,75 +1,17 @@
-// pages/index.jsx
 import Link from 'next/link';
-import Head from 'next/head';
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Centre College Athletic Supplies</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
-      <div style={styles.container}>
-        <img src="/centre_college_logo.png" alt="Centre College Logo" style={styles.logo} />
-        <h1 style={styles.h1}>Centre College Athletic Office Supplies</h1>
-        <nav style={styles.nav}>
-          <Link href="/mobile-checkout" passHref>
-            <button style={styles.btn}>📱 Quick Checkout (Mobile)</button>
-          </Link>
-          <Link href="/recent-checkouts" passHref>
-            <button style={styles.btn}>📋 Recent Checkouts</button>
-          </Link>
-          <Link href="/current-inventory" passHref>
-            <button style={styles.btn}>📦 Current Inventory</button>
-          </Link>
-          <Link href="/add-items" passHref>
-            <button style={styles.btn}>➕ Add New Items</button>
-          </Link>
-        </nav>
-      </div>
-    </>
+    <main style={{ maxWidth:420, margin:'0 auto', padding:'20px' }}>
+      <img src="/centre_college_logo.png" style={{ width:160, display:'block', margin:'0 auto' }} alt="logo"/>
+      <h1 style={{ textAlign:'center', margin:'28px 0 24px' }}>
+        Centre College Athletic Supplies
+      </h1>
+
+      <Link href="/mobile-checkout"><button>📱 Quick Checkout</button></Link>
+      <Link href="/recent-checkouts"><button style={{ marginTop:16 }}>Recent Checkouts</button></Link>
+      <Link href="/current-inventory"><button style={{ marginTop:16 }}>Current Inventory</button></Link>
+      <Link href="/add_items"><button style={{ marginTop:16 }}>Add New Items</button></Link>
+    </main>
   );
 }
-
-const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '20px',
-    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    minHeight: '100vh',
-    justifyContent: 'center',
-  },
-  logo: {
-    maxWidth: '200px',
-    marginBottom: '2rem',
-  },
-  h1: {
-    textAlign: 'center',
-    margin: '0 0 2rem 0',
-    color: '#333',
-  },
-  nav: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-    width: '100%',
-  },
-  btn: {
-    background: '#F9C32D',
-    color: '#000',
-    padding: '18px 32px',
-    borderRadius: '8px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: '1.2em',
-    border: 'none',
-    cursor: 'pointer',
-    width: '100%',
-    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-    transition: 'transform 0.2s ease',
-  },
-};
