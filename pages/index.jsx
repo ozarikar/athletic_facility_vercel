@@ -14,7 +14,7 @@ export default function Home() {
         <h1 style={styles.h1}>Centre College Athletic Office Supplies</h1>
         <nav style={styles.nav}>
           <Link href="/mobile-checkout" passHref>
-            <button style={styles.btn}>📱 Quick Checkout (Mobile)</button>
+            <button style={styles.btn}>📱 Quick Checkout</button>
           </Link>
           <Link href="/recent-checkouts" passHref>
             <button style={styles.btn}>📋 Recent Checkouts</button>
