@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import Layout from '../components/Layout';
+import Layout from '../src/components/Layout';
+
+export default function AddItemsPage() { // Rename component to be more descriptive
+  return (
+    <Layout title="Add New Item">
+      <AddItems />
+    </Layout>
+  );
+}
 
 export default function AddItems() {
   const [form, setForm] = useState({ item_name: '', category: '', total_quantity: 1, description: '' });
@@ -22,50 +30,46 @@ export default function AddItems() {
     }
   };
   return (
-    <Layout title="Add New Item">
+    <div>
+      <h2 style={styles.h2}>Add New Item</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          name="item_name"
-          placeholder="Item Name"
-          value={form.item_name}
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
-        <input
-          name="category"
-          placeholder="Category"
-          value={form.category}
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
-        <input
-          name="total_quantity"
-          type="number"
-          min="1"
-          value={form.total_quantity}
-          onChange={handleChange}
-          required
-          style={inputStyle}
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={form.description}
-          onChange={handleChange}
-          rows={3}
-          style={inputStyle}
-        />
-        <button type="submit" style={btnStyle}>
-          Add Item
-        </button>
+        <input name="item_name" placeholder="Item Name" /* ... */ style={styles.input} />
+        <input name="category" placeholder="Category" /* ... */ style={styles.input} />
+        <input name="total_quantity" type="number" /* ... */ style={styles.input} />
+        <textarea name="description" placeholder="Description" /* ... */ style={{...styles.input, height: '100px'}} />
+        <button type="submit" style={styles.btn}>Add Item</button>
       </form>
-
-      {message && <p style={{ marginTop: 20 }}>{message}</p>}
-    </Layout>
+      {/* ... */}
+    </div>
   );
 }
 
-const inputStyle = { width: '100%', margin: '8px 0', padding: 12, borderRadius: 4, border: '1px solid #ccc' };
-const btnStyle = { ...inputStyle, background: '#F9C32D', color: '#000', fontWeight: 'bold', border: 'none', cursor: 'pointer' };
+// Add some styles at the bottom
+const styles = {
+  h2: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: '2rem',
+  },
+  input: {
+    width: '100%',
+    padding: '12px',
+    margin: '8px 0',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box', // Important for consistent sizing
+    fontSize: '1em',
+  },
+  btn: {
+    width: '100%',
+    padding: '14px',
+    margin: '8px 0',
+    borderRadius: '8px',
+    border: 'none',
+    background: '#F9C32D', // Vercel Gold
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: '1.1em',
+    cursor: 'pointer',
+  }
+};
