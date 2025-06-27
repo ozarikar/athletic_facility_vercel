@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Layout from '../components/Layout';
 
 export default function AddItems() {
   const [form, setForm] = useState({ item_name: '', category: '', total_quantity: 1, description: '' });
@@ -21,8 +22,7 @@ export default function AddItems() {
     }
   };
   return (
-    <div style={{ maxWidth: 400, margin: '0 auto', padding: 20 }}>
-      <h2>Add New Item</h2>
+    <layout title="Add New Item">
       <form onSubmit={handleSubmit}>
         <input name="item_name" placeholder="Item Name" value={form.item_name} onChange={handleChange} required style={inputStyle} />
         <input name="category" placeholder="Category" value={form.category} onChange={handleChange} required style={inputStyle} />
@@ -31,9 +31,6 @@ export default function AddItems() {
         <button type="submit" style={btnStyle}>Add Item</button>
       </form>
       {message && <div style={{ marginTop: 20 }}>{message}</div>}
-    </div>
+    </layout>
   );
 }
-
-const inputStyle = { width: '100%', margin: '8px 0', padding: 12, borderRadius: 4, border: '1px solid #ccc' };
-const btnStyle = { ...inputStyle, background: '#F9C32D', color: '#000', fontWeight: 'bold', border: 'none', cursor: 'pointer' };

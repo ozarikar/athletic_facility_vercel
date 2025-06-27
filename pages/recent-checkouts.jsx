@@ -6,9 +6,8 @@ export default function RecentCheckouts() {
     fetch('/api/checkouts').then(res => res.json()).then(setCheckouts);
   }, []);
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto', padding: 20 }}>
-      <h2>Recent Checkouts</h2>
-      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+    <Layout title="Recent Checkouts">
+      <table>
         <thead>
           <tr>
             <th>Person</th><th>Item</th><th>Team</th><th>Quantity</th><th>Time</th>
@@ -26,6 +25,6 @@ export default function RecentCheckouts() {
           ))}
         </tbody>
       </table>
-    </div>
+    </Layout>
   );
 }

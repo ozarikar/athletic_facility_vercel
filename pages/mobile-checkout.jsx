@@ -34,7 +34,28 @@ export default function MobileCheckout() {
   return (
     <Layout title="Quick Checkout">
       <form onSubmit={handleSubmit}>
-        {/* inputs unchanged */}
+        <input name="person" placeholder="Your Name" value={form.person} onChange={handleChange} required style={inputStyle} />
+        <select name="item" value={form.item} onChange={handleChange} required style={inputStyle}>
+          <option value="">Select Item</option>
+          {items.map(i => (
+            <option key={i.id} value={i.item_name}>{i.item_name} (Available: {i.available_quantity})</option>
+          ))}
+        </select>
+        <select name="team" value={form.team} onChange={handleChange} required style={inputStyle}>
+          <option value="">Select Team</option>
+          <option>Basketball</option>
+          <option>Football</option>
+          <option>Soccer</option>
+          <option>Baseball</option>
+          <option>Track</option>
+          <option>Swimming</option>
+          <option>Tennis</option>
+          <option>Golf</option>
+          <option>Cross Country</option>
+          <option>Volleyball</option>
+          <option>Other</option>
+        </select>
+        <input name="quantity" type="number" min="1" value={form.quantity} onChange={handleChange} required style={inputStyle} />
         <button type="submit" style={{ marginTop:12 }}>Check Out</button>
       </form>
       {message && <p style={{ marginTop:12 }}>{message}</p>}
