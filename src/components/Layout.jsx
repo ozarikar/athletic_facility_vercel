@@ -1,4 +1,3 @@
-// src/components/Layout.jsx
 import Link from 'next/link';
 import Head from 'next/head';
 
@@ -27,16 +26,17 @@ const styles = {
     maxWidth: '800px',
     margin: '0 auto',
     padding: '20px',
-    fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '40px',
+    paddingBottom: '20px',
+    borderBottom: '1px solid #ddd',
   },
   logo: {
-    height: '50px',
+    height: '40px',
     width: 'auto',
   },
   homeButton: {
