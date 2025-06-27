@@ -11,7 +11,7 @@ export default function Home() {
       <Link href="/mobile-checkout"><button>📱 Quick Checkout</button></Link>
       <Link href="/recent-checkouts"><button style={{ marginTop:16 }}>Recent Checkouts</button></Link>
       <Link href="/current-inventory"><button style={{ marginTop:16 }}>Current Inventory</button></Link>
-      <Link href="/add_items"><button style={{ marginTop:16 }}>Add New Items</button></Link>
+      <Link href="/add-items"><button style={{ marginTop:16 }}>Add New Items</button></Link>
     </main>
   );
 }
