@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
-import Layout from '../components/Layout';
+import Layout from '../src/components/Layout';
 
-export default function MobileCheckout() {
+export default function MobileCheckoutPage() { // Rename component to be more descriptive
+  return (
+    <Layout title="Quick Checkout">
+      <MobileCheckout />
+    </Layout>
+  );
+}
+
+function MobileCheckout() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({ person: '', item: '', team: '', quantity: 1 });
   const [message, setMessage] = useState('');
@@ -32,7 +40,7 @@ export default function MobileCheckout() {
   };
 
   return (
-    <Layout title="Quick Checkout">
+    <div>
       <form onSubmit={handleSubmit}>
         <input name="person" placeholder="Your Name" value={form.person} onChange={handleChange} required style={inputStyle} />
         <select name="item" value={form.item} onChange={handleChange} required style={inputStyle}>
@@ -59,9 +67,36 @@ export default function MobileCheckout() {
         <button type="submit" style={{ marginTop:12 }}>Check Out</button>
       </form>
       {message && <p style={{ marginTop:12 }}>{message}</p>}
-    </Layout>
+    </div>
   );
 }
 
-const inputStyle = { width: '100%', margin: '8px 0', padding: 12, borderRadius: 4, border: '1px solid #ccc' };
-const btnStyle = { ...inputStyle, background: '#28a745', color: '#fff', fontWeight: 'bold', border: 'none', cursor: 'pointer' };
+// Add some styles at the bottom
+const styles = {
+  h2: {
+    textAlign: 'center',
+    color: '#333',
+    marginBottom: '2rem',
+  },
+  input: {
+    width: '100%',
+    padding: '12px',
+    margin: '8px 0',
+    borderRadius: '8px',
+    border: '1px solid #ccc',
+    boxSizing: 'border-box', // Important for consistent sizing
+    fontSize: '1em',
+  },
+  btn: {
+    width: '100%',
+    padding: '14px',
+    margin: '8px 0',
+    borderRadius: '8px',
+    border: 'none',
+    background: '#F9C32D', // Vercel Gold
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: '1.1em',
+    cursor: 'pointer',
+  }
+};
