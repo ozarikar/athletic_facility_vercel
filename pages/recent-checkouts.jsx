@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Layout from '../src/components/Layout';
 
-export default function RecentCheckouts() {
+export default function RecentCheckoutsPage() {
   return (
     <Layout title="Recent Checkouts">
       <RecentCheckouts />
