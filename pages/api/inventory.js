@@ -1,5 +1,5 @@
 // pages/api/inventory.js
-import { supabase } from '@lib/supabaseClient'; // Make sure this uses the alias now
+import { supabase } from '../../lib/supabaseClient'; //Use relative path
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
